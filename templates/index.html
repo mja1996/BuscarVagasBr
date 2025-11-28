@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuscaVagas - Links Funcionais</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-briefcase"></i>
+                <h1>BuscaVagas</h1>
+            </div>
+            <p class="subtitle">Encontre sua próxima oportunidade profissional</p>
+            <div class="stats">
+                <span><i class="fas fa-link"></i> Links Funcionais</span>
+                <span><i class="fas fa-globe"></i> 9 sites de emprego</span>
+                <span><i class="fas fa-search"></i> 15-35 vagas por busca</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="search-section">
+                <h2>Buscar Vagas de Emprego</h2>
+                <div class="info-box">
+                    <i class="fas fa-info-circle"></i>
+                    <p><strong>Sistema com Links Funcionais!</strong> Agora todos os links direcionam para páginas reais de busca dos sites de emprego onde você pode se candidatar às vagas.</p>
+                </div>
+                <form id="search-form" class="search-form">
+                    <div class="form-group">
+                        <label for="cargo">
+                            <i class="fas fa-search"></i>
+                            Cargo ou Palavra-chave
+                        </label>
+                        <input 
+                            type="text" 
+                            id="cargo" 
+                            name="cargo" 
+                            placeholder="Ex: Desenvolvedor Python, Analista, Vendedor..." 
+                            required
+                        >
+                        <div class="search-suggestions">
+                            <span class="suggestion-tag" onclick="fillSearch('Desenvolvedor Python')">Desenvolvedor Python</span>
+                            <span class="suggestion-tag" onclick="fillSearch('Analista de Dados')">Analista de Dados</span>
+                            <span class="suggestion-tag" onclick="fillSearch('Vendedor')">Vendedor</span>
+                            <span class="suggestion-tag" onclick="fillSearch('Java')">Java</span>
+                            <span class="suggestion-tag" onclick="fillSearch('React')">React</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categoria">
+                            <i class="fas fa-tags"></i>
+                            Categoria (Opcional)
+                        </label>
+                        <select id="categoria" name="categoria">
+                            <option value="">Todas as categorias</option>
+                            {% for key, cat in categorias %}
+                            <option value="{{ key }}">{{ cat.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="localizacao">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Localização
+                        </label>
+                        <input 
+                            type="text" 
+                            id="localizacao" 
+                            name="localizacao" 
+                            placeholder="Ex: São Paulo, Rio de Janeiro, Remoto..." 
+                            value="Brasil"
+                        >
+                    </div>
+
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i>
+                        Buscar Vagas com Links Funcionais
+                    </button>
+                </form>
+            </section>
+
+            <section class="categories-section">
+                <h3>Categorias Populares</h3>
+                <div class="categories-grid">
+                    {% for key, cat in categorias %}
+                    <div class="category-card" data-category="{{ key }}">
+                        <div class="category-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h4>{{ cat.nome }}</h4>
+                        <p>{{ cat.subcategorias|length }} especialidades</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section class="info-section">
+                <div class="info-cards">
+                    <div class="info-card">
+                        <i class="fas fa-link"></i>
+                        <h4>Links 100% Funcionais</h4>
+                        <p>Todos os links direcionam para páginas reais de busca dos sites de emprego</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-globe"></i>
+                        <h4>9 Sites de Emprego</h4>
+                        <p>Indeed, LinkedIn, Catho, Vagas.com, InfoJobs, Glassdoor e outros</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-briefcase"></i>
+                        <h4>Candidature-se Diretamente</h4>
+                        <p>Acesse as vagas reais nos sites e candidate-se diretamente</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 BuscaVagas. Sistema com links funcionais para sites reais de emprego.</p>
+        </footer>
+    </div>
+
+    <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+        <p>Buscando em sites reais de emprego...</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        function fillSearch(term) {
+            document.getElementById('cargo').value = term;
+        }
+    </script>
+</body>
+</html>

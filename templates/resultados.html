@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados da Busca - BuscaVagas Links Funcionais</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <a href="{{ url_for('index') }}">
+                    <i class="fas fa-briefcase"></i>
+                    <h1>BuscaVagas</h1>
+                </a>
+            </div>
+            <a href="{{ url_for('index') }}" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Nova Busca
+            </a>
+        </header>
+
+        <main class="main-content">
+            <section class="results-section">
+                <div id="search-info" class="search-info">
+                    <h2>Resultados da Busca</h2>
+                    <div class="search-details">
+                        <span id="total-results">0 vagas encontradas</span>
+                        <div class="sources-info">
+                            <i class="fas fa-link"></i>
+                            <span>Links funcionais para: Indeed, LinkedIn, Catho, Vagas.com, InfoJobs, Glassdoor e outros</span>
+                        </div>
+                        <div class="sources-info">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Clique em "Ver Vaga" para acessar a busca no site original e se candidatar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-container">
+                    <div id="job-results" class="job-list">
+                        <!-- Resultados serão carregados aqui -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 BuscaVagas. Links funcionais para sites reais de emprego.</p>
+        </footer>
+    </div>
+
+    <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+        <p>Carregando vagas de sites reais...</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchData = {
+                cargo: urlParams.get('cargo') || '',
+                categoria: urlParams.get('categoria') || '',
+                localizacao: urlParams.get('localizacao') || 'Brasil'
+            };
+
+            if (searchData.cargo) {
+                performSearch(searchData);
+            } else {
+                document.getElementById('job-results').innerHTML = '<div class="no-results">Nenhuma busca foi realizada.</div>';
+            }
+        });
+    </script>
+</body>
+</html>
